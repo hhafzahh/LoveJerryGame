@@ -6,14 +6,19 @@ import time
 color_red = "\033[91m"
 color_default = "\033[0m"
 
+#To show the health of the pet in progress bar visual
+#Total Health = 100%
+#The parameter is based on the value in the startgame()
 def convertHealthToBar(pethealth):
     maxhealth = 100
     currenthealth = pethealth
+
+    #I cant find the shaded symbol
     remaining_health_symbol = "X"
     lost_health_symbol = "_"
     bars = 20
     
-
+    #no of remaining health bars = currenthealth/100 * 20
     remaining_health_bars = round(currenthealth/maxhealth * bars)
     lost_health_bars = bars - remaining_health_bars
 
@@ -23,11 +28,12 @@ def convertHealthToBar(pethealth):
           f"{color_default}{lost_health_bars * lost_health_symbol}|")
     print('==================================================================')
 
+    #give warning reminder if pet health is lower than 50
     if currenthealth < 50:
         print("Please take care of the pet. The health of pet is decreasing as it is not being fed and take care of!")
     print('----------------------------------------------------------------------------------------------------------')
 
-# for now we can have math quiz to only include product..
+# Game Option 1 : Math Quiz
 def mathquiz():
     
     print('Enjoy a math quiz, and respond with nothing to stop.')
@@ -35,6 +41,11 @@ def mathquiz():
     num_wrong = 0
     total_right_answer_seconds = 0.0
 
+    # A simple math quiz with numbers with small numbers
+    # 1. Take 2 random numbers & 1 random operator
+    # 2. Set the correct value as result
+    # 3. Condition : If input by user != correct value, then print according
+    # 4. It notes the time taken too <- ask group mates if we want to condition time interval such that longer time -> considered decrease of 1 credit etc.
     while True:
         num1 = randint(2, 9)
         num2 = randint(2, 11)
@@ -53,7 +64,7 @@ def mathquiz():
         if not response:
             break
         elapsed = time.time() - start_time
-        try:  # `int` may fail
+        try: 
             if int(response) == result:
                 print(f'Right, in {elapsed:.2f} seconds')
                 num_right += 1
@@ -69,8 +80,9 @@ def mathquiz():
     print("difference", difference)
     return difference
 
+##########################################################################
 
-# type fast
+# Game Option 2 : Typing Game 
 def typingGame():
    credits = 0
    #for now we can have hardcoded string, later create random generated string..
@@ -82,6 +94,8 @@ def typingGame():
    wordcount = len(String.split())
    print('Enter the sentence:', String)
    print('=========================================================')
+
+   #still working on this part <- need to condition more..
    while True:
        initialTime = time.time()
        inputText = str(input('Enter the sentence:'))
@@ -133,7 +147,10 @@ def typingGame():
 
 
 
-
+#If user wants to earn more credits, this function will run
+#1. Ask for user input to confirm yes
+#2. Ask for Game Type - math or typing
+#3. Based on the Game Type, call function, and store the credits into the credits variable
 def earnMoreCredits():
     user_input = ''
     while True:
@@ -162,26 +179,45 @@ def earnMoreCredits():
             print('Type yes/no')
 
 
+#Main Function to start game
+#Have a random value of credits and health of pet
 def startgame():
     credits = random.randint(1, 20)
     health = random.randint(1, 90)
     while health > 0:
+
+        #Show pet health bar
         convertHealthToBar(health)
-        #please enter to see the options
+
+        #Ask user for input of which options they want to enter
         print("Press enter to see the options availabe")
-        print(" 1. Show Credits \n 2. Earn more Credits \n 3. See Pet Health \n 4. Feed the Cat \n 5. Quit")
+        print(''' " 1. Show Credits \n 
+                    2. Earn more Credits \n
+                    3. See Pet Health \n 
+                    4. Feed the Cat \n 
+                    5. Quit" 
+              ''')
+        
         menuSelectedOption = int(input("Pick an option (1-5):      "))
+        #If Option 1, print the value of credits variable
         if menuSelectedOption == 1:
             print("Credits Attained: " , credits)
+        
+        #If Option 2, Add credits to initial credits variable and print the final credits
         elif menuSelectedOption == 2:
             earningNew = earnMoreCredits()
             print("testing", earningNew)
             credits = credits + earningNew
             print("Total Credits", credits)
 
+        #If Option 3, Show health of pet <-- might want to remove
         elif menuSelectedOption == 3:
             print("Health of Pet:" , health )
 
+        #If Option 4, Feed the Pet
+        #Choice of food : Fish (4 credits to buy) , Water (2 credits to buy)
+        #If enough credits, immediately deduct,else prompt to choose option 2 to earn more credits
+        # Once pet is fed, health increases based on the choice of food [fish - increase by 10 , water - increase by 2 ]
         elif menuSelectedOption == 4: 
             totalCred_fish = 4
             totalCred_water = 2
@@ -209,4 +245,6 @@ def startgame():
 
 
 startgame()
+
+
 # convert the above into tkinter.
