@@ -129,6 +129,8 @@ def typingGame():
 #Riddle Game
 
 
+#hangman Game
+
 
 
 
