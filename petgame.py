@@ -1,4 +1,5 @@
 # Game Purpose to increase Cognitive skills - Math Mental Sum + Type Writing Fast
+# Text Based Game
 from random import choice, randint
 import random
 import time
