@@ -141,11 +141,72 @@ def typingGame():
         return credits
         break
 
+
+###### Game Option 3: Word Scramble Game
+# function for choosing random word.
+def choose():
+  # list of word
+  words = [
+      'coding', 'laptop', 'physcics', 'programming', 'mathematics', 'player',
+      'game', 'reverse', 'water', 'board', 'smart'
+  ]
+
+  #pick is a random word from the list
+  pick = random.choice(words)
+
+  return pick
+
+
+#function to jumble/shuffle the letters of the word
+def jumble(word):
+  # sample() method shuffling the characters of the word
+  random_word = random.sample(word, len(word))
+
+  # join() method join the elements of the iterator(e.g. list) with particular character .
+  jumbled = ''.join(random_word)
+  return jumbled
+
+
+# Function for playing the game.
+def wordScrambleGame():
+
+  # set initial score as 0
+  score = 0
+
+  # keep looping
+  while True:
+
+    #choose a random word
+    picked_word = choose()
+
+    #jumble the word
+    jumble_word = jumble(picked_word)
+    print("jumbled word is :", jumble_word)
+
+    #ask user for input
+    ans = input("what is in your mind? ")
+
+    # checking ans is equal to picked_word or not
+    if ans == picked_word:
+
+      # score increment by 1 when user answer correctly
+      score += 1
+      print("Correct Answer")
+    else:
+      print("Better luck next time...correct word is :", picked_word)
+
+    c = int(input("press 1 to continue and 0 to quit :"))
+
+    #once user quits, score will be returned as credits earned
+    if c == 0:
+      print(score)
+      return score
+      break
+
 #Riddle Game
 
 
-#hangman Game
-
+#tic tac toe Game
 
 
 #If user wants to earn more credits, this function will run
@@ -158,7 +219,7 @@ def earnMoreCredits():
         user_input = input('Do you want to earn more credits? yes/no: ')
 
         if user_input.lower() == 'yes':
-            game_type = input('Cognitive Math or Cognitive Typing? (math/tying):' )
+            game_type = input('Cognitive Math or Cognitive Typing? or Word Game? (math/tying/word):' )
             if game_type.lower() == 'math':
                 credits = mathquiz()
                 print("played", credits)
@@ -171,6 +232,12 @@ def earnMoreCredits():
                 print("typed & earned: ", credits)
                 return credits
                 break
+            elif game_type.lower() == 'word':
+               print("Word Scramble Game")
+               credits = wordScrambleGame()
+               print("Earned Credits:" , credits)
+               return credits 
+               break
             else:
                 print("invalid")
         elif user_input.lower() == 'no':
@@ -192,11 +259,12 @@ def startgame():
 
         #Ask user for input of which options they want to enter
         print("Press enter to see the options availabe")
-        print(''' " 1. Show Credits \n 
+        print('''  
+                    1. Show Credits \n 
                     2. Earn more Credits \n
                     3. See Pet Health \n 
                     4. Feed the Cat \n 
-                    5. Quit" 
+                    5. Quit
               ''')
         
         menuSelectedOption = int(input("Pick an option (1-5):      "))

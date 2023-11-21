@@ -148,6 +148,14 @@ def typingGame():
 def hangman():
     pass
 
+#other word games - cognitive thinking
+def triviaGame():
+    pass
+
+#other word games - cognitive thinking
+def jumbleWord():
+    pass
+
 ## have more games till hits 400 lines code specified in docs lol
 
 window.mainloop()
