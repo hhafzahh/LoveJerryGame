@@ -143,6 +143,11 @@ def typingGame():
 
 
 ###### Game Option 3: Word Scramble Game
+#1. Choose a random word from the words list
+#2. Jumble the characters of that word
+#3. Ask user for input of the unscrambled word
+#4. If userinput = random word selected, then credit added 1 
+
 # function for choosing random word.
 def choose():
   # list of word
@@ -153,6 +158,7 @@ def choose():
 
   #pick is a random word from the list
   pick = random.choice(words)
+
 
   return pick
 
@@ -219,7 +225,7 @@ def earnMoreCredits():
         user_input = input('Do you want to earn more credits? yes/no: ')
 
         if user_input.lower() == 'yes':
-            game_type = input('Cognitive Math or Cognitive Typing? or Word Game? (math/tying/word):' )
+            game_type = input('Cognitive Math or Cognitive Typing? or Word Game? (math/typing/word):' )
             if game_type.lower() == 'math':
                 credits = mathquiz()
                 print("played", credits)
