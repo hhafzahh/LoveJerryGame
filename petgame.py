@@ -210,10 +210,94 @@ def wordScrambleGame():
       break
 
 #Riddle Game
+###### Game Option 4: Number Guessing Game
+#Bagel Game, guess 3 numbers and see if you are right
+
+NUM_DIGITS = 2
+MAX_GUESS = 10
 
 
-#tic tac toe Game
+def getSecretNum():
+  #Returns  a string of unique random digits that is NUM_DIGITS long.
+  numbers = list(range(10))
+  random.shuffle(numbers)
+  secretNum = ''
+  for i in range(NUM_DIGITS):
+    secretNum += str(numbers[i])
+  return secretNum
 
+
+
+def getClues(guess, secretNum):
+#Returns a string with the Pico, \
+#Fermi, & Bagels clues to the user.
+  if guess == secretNum:
+    return 'You got it, boo!'
+  
+  if guess[0] == secretNum[0] or guess[1] == secretNum[1]:
+    return 'Fermi'
+  elif guess[0] == secretNum[1] or guess[1] == secretNum[0]:
+    return 'Pico'
+  else:
+    return 'Bagels'
+    
+
+
+def isOnlyDigits(num):
+  # Returns True if num is a string of only digits,
+  # otherwise returns False
+  num_str = str(num)
+  if num_str == '':
+    return False
+  else:
+    for i in num_str:
+      if i not in '0123456789':
+        return False
+    return True
+
+
+def guessingGame():
+  score = 0
+  print('I am thinking of a %s-digit number. Try to guess what it is!' %
+        (NUM_DIGITS))
+  print('''
+      The clues I give are...
+      ------------------------------------------------------------
+      When I say:  |That means:
+      ------------------------------------------------------------
+      Bagels       |None of the digits is correct.
+      ------------------------------------------------------------
+      Pico         |One digit is correct but in the wrong position.
+      ------------------------------------------------------------
+      Fermi        |One digit is correct and in the right position
+      ------------------------------------------------------------
+    ''')
+  
+  while True:
+    secretNum = getSecretNum()
+    print("for troubleshooting", secretNum)
+    print('I have thought up a number. You have %s guesses to get it' %
+          (MAX_GUESS))
+    guessesTaken = 1
+    while guessesTaken <= MAX_GUESS:
+      guess = ''
+      while len(guess) != NUM_DIGITS or not isOnlyDigits(guess):
+        print('Guess %s: ' % (guessesTaken))
+        guess = input()
+
+      print(getClues(guess, secretNum))
+      guessesTaken += 1
+
+      if guess == secretNum:
+        score = score + 1
+        return score
+        break
+      if guessesTaken > MAX_GUESS:
+        print('You ran out of guesses. The number was %s' % (secretNum))
+
+    print('Do you want to play again?(yes or no)')
+    if not input().lower().startswith('y'):
+      break
 
 #If user wants to earn more credits, this function will run
 #1. Ask for user input to confirm yes
@@ -225,7 +309,7 @@ def earnMoreCredits():
         user_input = input('Do you want to earn more credits? yes/no: ')
 
         if user_input.lower() == 'yes':
-            game_type = input('Cognitive Math or Cognitive Typing? or Word Game? (math/typing/word):' )
+            game_type = input('Cognitive Math or Cognitive Typing? or Word Game? or Guessing Game (math/typing/word/guess):')
             if game_type.lower() == 'math':
                 credits = mathquiz()
                 print("played", credits)
@@ -244,6 +328,12 @@ def earnMoreCredits():
                print("Earned Credits:" , credits)
                return credits 
                break
+            elif game_type.lower() == 'guess':
+                print("Guessing Game")
+                credits = guessingGame()
+                print("Earned Credits:", credits)
+                return credits
+                break
             else:
                 print("invalid")
         elif user_input.lower() == 'no':
