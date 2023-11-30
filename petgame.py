@@ -50,16 +50,15 @@ def mathquiz():
     while True:
         num1 = randint(2, 9)
         num2 = randint(2, 11)
-        operator = choice(['+','-','x','÷'])
+        operator = choice(['+','-','x'])
         
         if operator == '+':
             result = num1 + num2
         elif operator == '-':
             result = num1 - num2
-        elif operator == 'x':
-            result = num1 * num2
         else:
-            result = num1 / num2
+            result = num1 * num2
+
         start_time = time.time()
         response = input(f'What is {num1} {operator} {num2}? ')
         if not response:
@@ -82,64 +81,77 @@ def mathquiz():
     return difference
 
 ##########################################################################
+# Game Option 2 : Color Text Game Quiz
+colours = [
+    'GREY','RED','GREEN', 'BROWN','BLUE','PURPLE','CYAN','BLACK'
+]
+score = 0
 
-# Game Option 2 : Typing Game 
-def typingGame():
-   credits = 0
-   #for now we can have hardcoded string, later create random generated string..
-   String = 'I am exponentionally getting tired day by day and workload is directly proportional to tiredness'
+# ANSI escape codes for colored text
+color_codes = {
+  'GREY': "\033[0;30m",
+  'RED': "\033[0;31m",
+  'GREEN': "\033[0;32m",
+  'BROWN': "\033[0;33m",
+  'BLUE': "\033[0;34m",
+  'PURPLE': "\033[0;35m",
+  'CYAN': "\033[0;36m",
+  'BLACK': "\033[0;37m",
+}
 
-   print('Press Enter to start typing or to break a new line')
-   print('Please Enter twice to break typing')
-   print('=========================================================')
-   wordcount = len(String.split())
-   print('Enter the sentence:', String)
-   print('=========================================================')
+def startColorGame():
 
-   #still working on this part <- need to condition more..
-   while True:
-       initialTime = time.time()
-       inputText = str(input('Enter the sentence:'))
-       finaltime = time.time()
-       accuracy = len(set(inputText.split()) & set(String.split()))
-       #accuracy seems SUS
-       accuracy = accuracy/wordcount
-       timetaken = finaltime - initialTime
-       wpm =(wordcount/timetaken) * 100
-       print('-----------------------------------------------------')
-       print("WPM",wpm, "Accuracy", accuracy, "Time Taken", timetaken)
-       print('-----------------------------------------------------')
-       #not conditioned properly, need to include accuracy and time
-       if wpm <= 10: 
-        print("Your typing is very slow, Learn the proper typing technique and keep practicing")
-        print("You have earned an extra 1 credit for trying")
-        credits = credits + 1
-        return credits
+  time_limit = 15
+  start_time = time.time()
+  
+  global score
+  while True:
+
+    #check if time limit is reached 
+    elapsed_time = time.time() - start_time
+    remaining_time = max(0, time_limit - elapsed_time)
+
+    if remaining_time <= 0:
+        print("Time's up! Game over.")
         break
-       elif wpm <= 20:
-        print("Your typing is slow. Focus on your technique and keep practicing")
-        print("You have earned an extra 2 credit for trying")
-        credits = credits + 2
-        return credits
-        break
-       elif wpm <= 30:
-        print("Better but still below average. Keep practicing to improve you speed and accuracy")
-        print("You have earned an extra 3 credit")
-        credits = credits + 3
-        return credits
-        break
-       elif wpm <= 40:
-        print("You are now an average typist. You still have significant room for improvement")
-        print("You have earned an extra 4 credit")
-        credits = credits + 4
-        return credits
-        break  
-       elif wpm > 40 and accuracy > 90:
-        print("You are doing well")
-        print("You have earned an extra 6 credit")
-        credits = credits + 6
-        return credits
-        break
+    # Your game logic goes here
+    print(f"Remaining Time: {int(remaining_time)} seconds")
+
+    # Simulate some game actions
+    print("Type in the color of the words, not the word text!")
+    print(f"Current Score: {score}")
+
+    random.shuffle(colours)
+    color = colours[0]
+    word = colours[1]
+
+    print(f"The color is: {color_codes[color]}{word}\033[0m")
+
+    user_input = input("Type the color: ").lower()
+
+    if user_input.lower() == color.lower():
+      score += 1
+    print(f"Current Score: {score}")
+    print(f"CORRECT COLOR: {color}")
+    print("\n")
+
+    c = int(input("press 1 to continue and 0 to quit :"))
+
+    #once user quits, score will be returned as credits earned
+    if c == 0:
+      print(score)
+      return score
+      break
+
+print("Color Fast Text Game in 15s")
+print("Press enter to start")
+def colorTextGame():
+  while True:
+    user_start = int(input("press 1 to start and 0 to quit :"))
+    if user_start == 1:
+      startColorGame()
+    else:
+      break
 
 
 ###### Game Option 3: Word Scramble Game
@@ -152,7 +164,7 @@ def typingGame():
 def choose():
   # list of word
   words = [
-      'coding', 'laptop', 'physcics', 'programming', 'mathematics', 'player',
+      'coding', 'laptop', 'physics', 'programming', 'mathematics', 'player',
       'game', 'reverse', 'water', 'board', 'smart'
   ]
 
@@ -209,14 +221,10 @@ def wordScrambleGame():
       return score
       break
 
-#Riddle Game
 ###### Game Option 4: Number Guessing Game
-#Bagel Game, guess 3 numbers and see if you are right
-
+#Bagel Game, guess 2 numbers and see if you are right
 NUM_DIGITS = 2
 MAX_GUESS = 10
-
-
 # 1. Get a list of 1-9
 # 2. Shuffle the numbers
 # 3. Set secretNumber as string and add each digit into the string
@@ -248,7 +256,7 @@ def getClues(guess, secretNum):
     return 'Pico'
   else:
     return 'Bagels'
-    
+  
 
 # Returns True if num is a string of only digits,
 # otherwise returns False
@@ -291,7 +299,7 @@ def guessingGame():
   
   while True:
     secretNum = getSecretNum()
-    
+
     print('I have thought up a number. You have %s guesses to get it' %
           (MAX_GUESS))
     guessesTaken = 1
@@ -318,9 +326,13 @@ def guessingGame():
     if not input().lower().startswith('y'):
       break
 
+
+###### Game Option 5: Color Mental Game
+
+
 #If user wants to earn more credits, this function will run
 #1. Ask for user input to confirm yes
-#2. Ask for Game Type - math or typing
+#2. Ask for Game Type - math or colorText or word or guess
 #3. Based on the Game Type, call function, and store the credits into the credits variable
 def earnMoreCredits():
     user_input = ''
@@ -328,16 +340,15 @@ def earnMoreCredits():
         user_input = input('Do you want to earn more credits? yes/no: ')
 
         if user_input.lower() == 'yes':
-            game_type = input('Cognitive Math or Cognitive Typing? or Word Game? or Guessing Game (math/typing/word/guess):')
+            game_type = input('Math or ColorText or Word or Guess Game? (math/colortext/word/guess):')
             if game_type.lower() == 'math':
                 credits = mathquiz()
                 print("played", credits)
                 return credits
                 break
-            elif game_type.lower() == 'typing':
-                #create function for typing fast
-                print("type fast")
-                credits = typingGame()
+            elif game_type.lower() == 'colortext':
+                print("Color Text")
+                credits = colorTextGame()
                 print("typed & earned: ", credits)
                 return credits
                 break
