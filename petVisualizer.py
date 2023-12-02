@@ -27,10 +27,10 @@ healthlabel.grid(row=0, column=1, sticky='nw',columnspan=1)
 # i need a real image of hostel cat
 #set cat image as bottom center
 # declare happy and sad cat images.
-sadCat = PhotoImage(file='sadCat.png')
+sadCat = PhotoImage(file='assets/sadCat.png')
 pet = Label(window, image=sadCat)
 pet.grid(row=2, column=0, columnspan=3, pady=10)  # Added columnspan to span all columns
-happyCat = PhotoImage(file='test.png')
+happyCat = PhotoImage(file='assets/test.png')
 
 #if health is less than 50, display sad cat else happy cat
 def updateImage():
