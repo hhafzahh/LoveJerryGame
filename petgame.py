@@ -1,4 +1,5 @@
-# Game Purpose to increase Cognitive skills - Math Mental Sum + Type Writing Fast
+# Game Purpose: Take Care of Hostel Jerry Cat by playing cognitive mini games
+# Increase Cognitive skills - Math Mental Sum + Color Text Game + Unscramble Word Game + Guess the Number
 # Text Based Game
 from random import choice, randint
 import random
@@ -6,6 +7,7 @@ import time
 
 color_red = "\033[91m"
 color_default = "\033[0m"
+color_green =  "\033[0;32m"
 
 #To show the health of the pet in progress bar visual
 #Total Health = 100%
@@ -23,16 +25,29 @@ def convertHealthToBar(pethealth):
     remaining_health_bars = round(currenthealth/maxhealth * bars)
     lost_health_bars = bars - remaining_health_bars
 
-    print('==================================================================')
-    print(f"Health of Pet: {currenthealth}/{maxhealth}")
-    print(f"|{color_red}{remaining_health_bars * remaining_health_symbol}"
-          f"{color_default}{lost_health_bars * lost_health_symbol}|")
-    print('==================================================================')
-
+    #if health reached 100, health bar green
+    if currenthealth == 100:
+      print('==================================================================')
+      print(f"Health of Pet: {currenthealth}/{maxhealth}")
+      print(f"|{color_green}{remaining_health_bars * remaining_health_symbol}"
+            f"{color_default}{lost_health_bars * lost_health_symbol}|")
+      print('==================================================================')
+    
+    #if health is not full, health bar red
+    else:
+      print('==================================================================')
+      print(f"Health of Pet: {currenthealth}/{maxhealth}")
+      print(f"|{color_red}{remaining_health_bars * remaining_health_symbol}"
+            f"{color_default}{lost_health_bars * lost_health_symbol}|")
+      print('==================================================================')
+      
     #give warning reminder if pet health is lower than 50
     if currenthealth < 50:
         print("Please take care of the pet. The health of pet is decreasing as it is not being fed and take care of!")
-    print('----------------------------------------------------------------------------------------------------------')
+    print('-------------------------------------------------------------------')
+    
+    
+        
 
 # Game Option 1 : Math Quiz
 def mathquiz():
@@ -84,18 +99,17 @@ def mathquiz():
 ##########################################################################
 # Game Option 2 : Color Text Game Quiz
 colours = [
-    'GREY','RED','GREEN', 'BROWN','BLUE','PURPLE','CYAN',
+    'GREY','RED','GREEN', 'YELLOW','BLUE','PURPLE','CYAN',
 ]
 # ANSI escape codes for colored text
 color_codes = {
   'GREY': "\033[0;30m",
   'RED': "\033[0;31m",
   'GREEN': "\033[0;32m",
-  'BROWN': "\033[0;33m",
+  'YELLOW': "\033[0;33m",
   'BLUE': "\033[0;34m",
   'PURPLE': "\033[0;35m",
   'CYAN': "\033[0;36m",
-  #'BLACK': "\033[0;37m",
 }
 
 def startColorGame():
@@ -117,10 +131,10 @@ def startColorGame():
             if remaining_time <= 0:
                 print("Time's up! Game over.")
                 break
-            # Your game logic goes here
+            # Show remaining time
             print(f"Remaining Time: {int(remaining_time)} seconds")
 
-            # Simulate some game actions
+            # Ask user to type color of word and not the text
             print("Type in the color of the words, not the word text!")
             print(f"Current Score: {score}")
 
@@ -137,6 +151,9 @@ def startColorGame():
                 print(f"Color is Correct!Good Job!")
                 print(f"Current Score: {score}")
                 print("\n")
+            
+            else:
+              print(f'Sorry! Wrong Answer, Correct Answer is: {color}')
 
             c = int(input("press 1 to continue and 0 to quit :"))
             
@@ -158,7 +175,6 @@ def startColorGame():
 #2. Jumble the characters of that word
 #3. Ask user for input of the unscrambled word
 #4. If userinput = random word selected, then credit added 1 
-
 # function for choosing random word.
 def choose():
   # list of word
@@ -169,8 +185,7 @@ def choose():
 
   #pick is a random word from the list
   pick = random.choice(words)
-
-
+  
   return pick
 
 
@@ -224,6 +239,7 @@ def wordScrambleGame():
 #Bagel Game, guess 2 numbers and see if you are right
 NUM_DIGITS = 2
 MAX_GUESS = 10
+
 # 1. Get a list of 1-9
 # 2. Shuffle the numbers
 # 3. Set secretNumber as string and add each digit into the string
@@ -243,7 +259,6 @@ def getSecretNum():
 #Else if first number of the user is  equal to firstnumber of secretNum but not equal for secondNum or vies versa, then return 'Fermi'
 #Else if first number of the user is in the correct position and correct value or the second is in the correct, then return 'Pico'
 #Else return 'Bagels'
-
 #Can have more clues here
 
 def getClues(guess, secretNum):
@@ -285,15 +300,15 @@ def guessingGame():
         (NUM_DIGITS))
   print('''
       The clues I give are...
-      ------------------------------------------------------------
-      When I say:  |That means:
-      ------------------------------------------------------------
-      Bagels       |None of the digits is correct.
-      ------------------------------------------------------------
-      Pico         |One digit is correct but in the wrong position.
-      ------------------------------------------------------------
-      Fermi        |One digit is correct and in the right position
-      ------------------------------------------------------------
+      ----------------------------------------------------------------
+      When I say ↓ :  |That means: ↓
+      ----------------------------------------------------------------
+      Bagels          |None of the digits is correct.
+      ----------------------------------------------------------------
+      Pico            |One digit is correct but in the wrong position.
+      ----------------------------------------------------------------
+      Fermi           |One digit is correct and in the right position.
+      ----------------------------------------------------------------
     ''')
   
   while True:
@@ -323,8 +338,6 @@ def guessingGame():
         score = 0 
         return score
         break
-###### Game Option 5: Color Mental Game
-
 
 #If user wants to earn more credits, this function will run
 #1. Ask for user input to confirm yes
@@ -343,7 +356,7 @@ def earnMoreCredits():
                 return credits
                 break
             elif game_type.lower() == 'colortext':
-                print("Color Text")
+                print("Color Text Game")
                 credits = startColorGame()
                 print("Earned Credits: ", credits)
                 return credits
@@ -375,10 +388,17 @@ def earnMoreCredits():
 def startgame():
     credits = random.randint(1, 20)
     health = random.randint(1, 90)
+    
+    
     while health > 0:
-
+      
         #Show pet health bar
         convertHealthToBar(health)
+        
+        #if health already reach 100, print good job and game over!
+        if health == 100:   
+          print("Good Job in taking care of the pet! Game Over! ")
+          break
 
         #Ask user for input of which options they want to enter
         print("Press enter to see the options availabe")
@@ -419,17 +439,25 @@ def startgame():
             print('Buy Water- Need 2 Credits - Health Increase by 2' )
             user_input = input('Do you want to buy fish or water? (fish/water):')
             if user_input.lower() == 'fish':
-                if credits >= totalCred_fish:
+                if credits >= totalCred_fish and health <= 100:
                     credits -= totalCred_fish
                     health += 10 # increase petheath by 10 when fed
+                    #health = max(0, min(health, 101))
+                    if health > 100:
+                      health = 100
                     print('You fed the cat. Pet health increased by 10.')
                 else:
                     print('Not enough credits to feed the cat')
-            elif user_input.lower() == 'water':
+            elif user_input.lower() == 'water' and health <= 100:
                 if credits >= totalCred_water: 
                     credits -= totalCred_water
                     health += 2 #increase pethealth by 2 when fed
-
+                    #health = max(0, min(health, 100))
+                    if health > 100:
+                      health = 100
+                    print('You fed the cat. Pet health increased by 2.')
+                else:
+                    print('Not enough credits to feed the cat')
             else:
                 print("invalid input")
         elif(menuSelectedOption == "5"):
@@ -437,7 +465,8 @@ def startgame():
             break
         else: 
             print('Invalid choice. Please enter 1-5')
-
+            
+      
 
 
 startgame()
