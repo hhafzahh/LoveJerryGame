@@ -37,6 +37,7 @@ def convertHealthToBar(pethealth):
 # Game Option 1 : Math Quiz
 def mathquiz():
     
+    print('Wrong Answer - deducts one credit, Correct Answer - earns one credit')
     print('Enjoy a math quiz, and respond with nothing to stop.')
     num_right = 0
     num_wrong = 0
@@ -276,7 +277,7 @@ def isOnlyDigits(num):
 # 5. While input is not equal to the length of numbers required or value is not digits, then set guess to input again
 # 6. Call the Clues function to check if it matches entirely or slightly and return the necessary clues to help the user, Increase GuessTaken by 1 
 # 7.  If it matches, score increment by 4, and break the game
-# 8. Ask user if he/she wishes to play again
+# 8. else once no.of guesses finish, return score as 0
 
 def guessingGame():
   score = 0
@@ -319,12 +320,9 @@ def guessingGame():
       
       if guessesTaken > MAX_GUESS:
         print('You ran out of guesses. The number was %s' % (secretNum))
-
-    print('Do you want to play again?(yes or no)')
-    if not input().lower().startswith('y'):
-      break
-
-
+        score = 0 
+        return score
+        break
 ###### Game Option 5: Color Mental Game
 
 
@@ -341,13 +339,13 @@ def earnMoreCredits():
             game_type = input('Math or ColorText or Word or Guess Game? (math/colortext/word/guess):')
             if game_type.lower() == 'math':
                 credits = mathquiz()
-                print("played", credits)
+                print("Earned Credits:  ", credits)
                 return credits
                 break
             elif game_type.lower() == 'colortext':
                 print("Color Text")
                 credits = startColorGame()
-                print("typed & earned: ", credits)
+                print("Earned Credits: ", credits)
                 return credits
                 break
             elif game_type.lower() == 'word':
@@ -402,7 +400,7 @@ def startgame():
         #If Option 2, Add credits to initial credits variable and print the final credits
         elif menuSelectedOption == "2":
             earningNew = earnMoreCredits()
-            print("testing", earningNew)
+            #print("testing", earningNew)
             credits = credits + earningNew
             print("Total Credits", credits)
 
