@@ -83,10 +83,8 @@ def mathquiz():
 ##########################################################################
 # Game Option 2 : Color Text Game Quiz
 colours = [
-    'GREY','RED','GREEN', 'BROWN','BLUE','PURPLE','CYAN','BLACK'
+    'GREY','RED','GREEN', 'BROWN','BLUE','PURPLE','CYAN',
 ]
-score = 0
-
 # ANSI escape codes for colored text
 color_codes = {
   'GREY': "\033[0;30m",
@@ -96,62 +94,62 @@ color_codes = {
   'BLUE': "\033[0;34m",
   'PURPLE': "\033[0;35m",
   'CYAN': "\033[0;36m",
-  'BLACK': "\033[0;37m",
+  #'BLACK': "\033[0;37m",
 }
 
 def startColorGame():
-
-  time_limit = 15
-  start_time = time.time()
-  
-  global score
-  while True:
-
-    #check if time limit is reached 
-    elapsed_time = time.time() - start_time
-    remaining_time = max(0, time_limit - elapsed_time)
-
-    if remaining_time <= 0:
-        print("Time's up! Game over.")
-        break
-    # Your game logic goes here
-    print(f"Remaining Time: {int(remaining_time)} seconds")
-
-    # Simulate some game actions
-    print("Type in the color of the words, not the word text!")
-    print(f"Current Score: {score}")
-
-    random.shuffle(colours)
-    color = colours[0]
-    word = colours[1]
-
-    print(f"The color is: {color_codes[color]}{word}\033[0m")
-
-    user_input = input("Type the color: ").lower()
-
-    if user_input.lower() == color.lower():
-      score += 1
-    print(f"Current Score: {score}")
-    print(f"CORRECT COLOR: {color}")
-    print("\n")
-
-    c = int(input("press 1 to continue and 0 to quit :"))
-
-    #once user quits, score will be returned as credits earned
-    if c == 0:
-      print(score)
-      return score
-      break
-
-print("Color Fast Text Game in 15s")
-print("Press enter to start")
-def colorTextGame():
+  print("Color Fast Text Game in 15s")
+  print("Press enter to start")   
+  score = 0 
   while True:
     user_start = int(input("press 1 to start and 0 to quit :"))
     if user_start == 1:
-      startColorGame()
+
+        score = score
+        time_limit = 15
+        start_time = time.time() 
+        while True:
+            #check if time limit is reached 
+            elapsed_time = time.time() - start_time
+            remaining_time = max(0, time_limit - elapsed_time)
+
+            if remaining_time <= 0:
+                print("Time's up! Game over.")
+                break
+            # Your game logic goes here
+            print(f"Remaining Time: {int(remaining_time)} seconds")
+
+            # Simulate some game actions
+            print("Type in the color of the words, not the word text!")
+            print(f"Current Score: {score}")
+
+            random.shuffle(colours)
+            color = colours[0]
+            word = colours[1]
+
+            print(f"The color is: {color_codes[color]}{word}\033[0m")
+
+            user_input = input("Type the color: ").lower()
+
+            if user_input.lower() == color.lower():
+                score += 1
+                print(f"Color is Correct!Good Job!")
+                print(f"Current Score: {score}")
+                print("\n")
+
+            c = int(input("press 1 to continue and 0 to quit :"))
+            
+            #once user quits, score will be returned as credits earned
+            if c == 0:
+                print(score)
+                return score
+                break
+            
+    
+        return score
+  
     else:
-      break
+       break
 
 
 ###### Game Option 3: Word Scramble Game
@@ -205,7 +203,7 @@ def wordScrambleGame():
     ans = input("what is in your mind? ")
 
     # checking ans is equal to picked_word or not
-    if ans == picked_word:
+    if ans.lower() == picked_word:
 
       # score increment by 1 when user answer correctly
       score += 1
@@ -348,7 +346,7 @@ def earnMoreCredits():
                 break
             elif game_type.lower() == 'colortext':
                 print("Color Text")
-                credits = colorTextGame()
+                credits = startColorGame()
                 print("typed & earned: ", credits)
                 return credits
                 break
@@ -368,6 +366,7 @@ def earnMoreCredits():
                 print("invalid")
         elif user_input.lower() == 'no':
             print('User typed no')
+            return 0
             break
         else:
             print('Type yes/no')
@@ -393,29 +392,33 @@ def startgame():
                     5. Quit
               ''')
         
-        menuSelectedOption = int(input("Pick an option (1-5):      "))
+    
+        userInput = input("Pick an option (1-5):      ")
+        menuSelectedOption = userInput
         #If Option 1, print the value of credits variable
-        if menuSelectedOption == 1:
+        if menuSelectedOption == "1":
             print("Credits Attained: " , credits)
         
         #If Option 2, Add credits to initial credits variable and print the final credits
-        elif menuSelectedOption == 2:
+        elif menuSelectedOption == "2":
             earningNew = earnMoreCredits()
             print("testing", earningNew)
             credits = credits + earningNew
             print("Total Credits", credits)
 
         #If Option 3, Show health of pet <-- might want to remove
-        elif menuSelectedOption == 3:
+        elif menuSelectedOption == "3":
             print("Health of Pet:" , health )
 
         #If Option 4, Feed the Pet
         #Choice of food : Fish (4 credits to buy) , Water (2 credits to buy)
         #If enough credits, immediately deduct,else prompt to choose option 2 to earn more credits
         # Once pet is fed, health increases based on the choice of food [fish - increase by 10 , water - increase by 2 ]
-        elif menuSelectedOption == 4: 
+        elif menuSelectedOption == "4": 
             totalCred_fish = 4
             totalCred_water = 2
+            print('Buy Fish - Need 4 Credits - Health Increase by 10')
+            print('Buy Water- Need 2 Credits - Health Increase by 2' )
             user_input = input('Do you want to buy fish or water? (fish/water):')
             if user_input.lower() == 'fish':
                 if credits >= totalCred_fish:
@@ -431,7 +434,7 @@ def startgame():
 
             else:
                 print("invalid input")
-        elif(menuSelectedOption == 5):
+        elif(menuSelectedOption == "5"):
             print('Quit Program')
             break
         else: 
