@@ -1,15 +1,26 @@
 ## Take care of Virtual Hostel Jerry 🐱
-### By Playing Mini Cognitive Games
+### By Playing Mini Cognitive Games ( CTD 1D Project)
+![(assets/lovejerry_description.png)](https://github.com/hhafzahh/LoveJerryGame/blob/main/assests/lovejerry_description.png)
 
-![(assets/lovejerry_description.png)](https://github.com/hhafzahh/1D_CTD_Game/blob/main/assests/lovejerry_description.png)
+#### Mini Games Enhancements
+1. **Difficulty Levels:**
+   - Introduce difficulty levels for each mini game.
+   - Adjust topics based on difficulty levels.
+   
+2. **Word Scramble Game:**
+   - Introduce random theme topics to scope the user's input
+   - Integrate a timing feature based on the number of credits.
 
-#### Improvements to make would be: 
+3. **Math Quiz:**
+   - Include more complex math problems like division or three-digit addition for higher difficulty levels.
 
-- Can have more feeding options or mini games options
+4. **Color Text:**
+   - Decrease the timing for higher difficulty levels to add a challenge.
 
-- For word scramble game, we can have random theme word so that it doesn’t feel hard cuz now the game is random word. We can include timing as based to how many credits also 
+5. **Number Guessing Game:**
+   - Include three-digit guessing numbers and provide additional clues for higher difficulty levels.
 
-- Include levels of difficulty and according to that we can vary the topics e.g difficulty - wordscramblegame can have difficult topics, then for math quiz, can include division or 3 digit addition problems, colortext - reduce timing , for numberguessinggame - we can have 3 digit guessing number and may be more clues.
-
-- Upgrade the app to Tkinter with buttons and better visual
+#### Technical Upgrade
+- Transition the app to Tkinter for a more user-friendly interface.
+- Implement buttons and enhance visual elements for improved aesthetics and usability.
 
